@@ -190,11 +190,11 @@ export default function WelcomeScreen() {
 
   const onCreateWallet = useCallback(async () => {
     analytics.track('Tapped "Get a new wallet"');
-    const operation = dangerouslyGetState()?.index === 1 ? navigate : replace;
-    operation(Routes.SWIPE_LAYOUT, {
-      params: { emptyWallet: true },
-      screen: Routes.WALLET_SCREEN,
-    });
+    // const operation = dangerouslyGetState()?.index === 1 ? navigate : replace;
+    // operation(Routes.SWIPE_LAYOUT, {
+    //   params: { emptyWallet: true },
+    //   screen: Routes.WALLET_SCREEN,
+    // });
   }, [dangerouslyGetState, navigate, replace]);
 
   const handlePressTerms = useCallback(() => {
