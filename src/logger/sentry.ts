@@ -14,7 +14,8 @@ import isTestFlight from '@/helpers/isTestFlight';
 export const sentryRoutingInstrumentation = IS_PROD ? new Sentry.ReactNavigationInstrumentation() : undefined;
 
 export const defaultOptions = {
-  dsn: SENTRY_ENDPOINT,
+  // dsn: SENTRY_ENDPOINT,
+  dsn: 'https://1bc4118c1feaad0aa997b643ca0ca06d@o4506944503808000.ingest.us.sentry.io/4506944505970688',
   enableAutoSessionTracking: true,
   environment: isTestFlight ? 'Testflight' : SENTRY_ENVIRONMENT,
   integrations: [
@@ -23,7 +24,7 @@ export const defaultOptions = {
       tracingOrigins: ['localhost', /^\//],
     }),
   ],
-  tracesSampleRate: 0.2,
+  tracesSampleRate: 0.1,
 };
 
 export async function initSentry() {
