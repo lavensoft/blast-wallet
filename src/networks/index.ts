@@ -19,15 +19,15 @@ import * as ls from '@/storage';
  */
 export const RainbowNetworks = [
   getMainnetNetworkObject(),
-  getArbitrumNetworkObject(),
-  getBaseNetworkObject(),
-  getOptimismNetworkObject(),
-  getPolygonNetworkObject(),
-  getZoraNetworkObject(),
-  getGnosisNetworkObject(),
-  getGoerliNetworkObject(),
-  getBSCNetworkObject(),
-  getAvalancheNetworkObject(),
+  // getArbitrumNetworkObject(),
+  // getBaseNetworkObject(),
+  // getOptimismNetworkObject(),
+  // getPolygonNetworkObject(),
+  // getZoraNetworkObject(),
+  // getGnosisNetworkObject(),
+  // getGoerliNetworkObject(),
+  // getBSCNetworkObject(),
+  // getAvalancheNetworkObject(),
   getBlastNetworkObject(),
 ];
 

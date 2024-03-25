@@ -54,6 +54,8 @@ function RecyclerAssetList({
     [additionalData, externalAddress, onPressUniqueToken]
   );
 
+  console.log({ typeWallet: type });
+
   return (
     <RecyclerAssetListScrollPositionContext.Provider value={position}>
       {type === 'wallet' && <NavbarOverlay accentColor={accentColor} position={position} />}

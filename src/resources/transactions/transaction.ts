@@ -1,7 +1,7 @@
 import { NativeCurrencyKey, RainbowTransaction } from '@/entities';
 import { createQueryKey, queryClient, QueryFunctionArgs, QueryFunctionResult } from '@/react-query';
 import { useQuery } from '@tanstack/react-query';
-import { consolidatedTransactionsQueryFunction, consolidatedTransactionsQueryKey } from './consolidatedTransactions';
+import { consolidatedTransactionsQueryKey } from './consolidatedTransactions';
 import { useAccountSettings } from '@/hooks';
 import { RainbowNetworks, getNetworkObj } from '@/networks';
 import { rainbowFetch } from '@/rainbow-fetch';
@@ -10,8 +10,8 @@ import { parseTransaction } from '@/parsers/transactions';
 import { Network } from '@/networks/types';
 import { RainbowError, logger } from '@/logger';
 
-export type ConsolidatedTransactionsResult = QueryFunctionResult<typeof consolidatedTransactionsQueryFunction>;
-export type PaginatedTransactions = { pages: ConsolidatedTransactionsResult[] };
+// export type ConsolidatedTransactionsResult = QueryFunctionResult<typeof consolidatedTransactionsQueryFunction>;
+// export type PaginatedTransactions = { pages: ConsolidatedTransactionsResult[] };
 
 export type TransactionArgs = {
   hash: string;
@@ -77,55 +77,55 @@ export const transactionFetchQuery = async ({
   hash: string;
 }) => queryClient.fetchQuery(transactionQueryKey({ address, currency, network, hash }), fetchTransaction);
 
-export function useBackendTransaction({ hash, network }: BackendTransactionArgs) {
-  const { accountAddress, nativeCurrency } = useAccountSettings();
+// export function useBackendTransaction({ hash, network }: BackendTransactionArgs) {
+//   const { accountAddress, nativeCurrency } = useAccountSettings();
 
-  const chainIds = RainbowNetworks.filter(network => network.enabled && network.networkType !== 'testnet').map(network => network.id);
+//   const chainIds = RainbowNetworks.filter(network => network.enabled && network.networkType !== 'testnet').map(network => network.id);
 
-  const paginatedTransactionsKey = consolidatedTransactionsQueryKey({
-    address: accountAddress,
-    currency: nativeCurrency,
-    chainIds,
-  });
+//   const paginatedTransactionsKey = consolidatedTransactionsQueryKey({
+//     address: accountAddress,
+//     currency: nativeCurrency,
+//     chainIds,
+//   });
 
-  const params: TransactionArgs = {
-    hash: hash,
-    address: accountAddress,
-    currency: nativeCurrency,
-    network: network,
-  };
+//   const params: TransactionArgs = {
+//     hash: hash,
+//     address: accountAddress,
+//     currency: nativeCurrency,
+//     network: network,
+//   };
 
-  return useQuery(transactionQueryKey(params), fetchTransaction, {
-    enabled: !!hash && !!accountAddress && !!network,
-    initialData: () => {
-      const queryData = queryClient.getQueryData<PaginatedTransactions>(paginatedTransactionsKey);
-      const pages = queryData?.pages || [];
-      for (const page of pages) {
-        const tx = page.transactions.find(tx => tx.hash === hash);
-        if (tx) {
-          return tx;
-        }
-        return {};
-      }
-    },
-    initialDataUpdatedAt: () => queryClient.getQueryState(paginatedTransactionsKey)?.dataUpdatedAt,
-  });
-}
+//   return useQuery(transactionQueryKey(params), fetchTransaction, {
+//     enabled: !!hash && !!accountAddress && !!network,
+//     initialData: () => {
+//       const queryData = queryClient.getQueryData<PaginatedTransactions>(paginatedTransactionsKey);
+//       const pages = queryData?.pages || [];
+//       for (const page of pages) {
+//         const tx = page.transactions.find(tx => tx.hash === hash);
+//         if (tx) {
+//           return tx;
+//         }
+//         return {};
+//       }
+//     },
+//     initialDataUpdatedAt: () => queryClient.getQueryState(paginatedTransactionsKey)?.dataUpdatedAt,
+//   });
+// }
 
-export const useTransaction = ({ network, hash }: { network: Network; hash: string }) => {
-  const {
-    data: backendTransaction,
-    isLoading: backendTransactionIsLoading,
-    isFetched: backendTransactionIsFetched,
-  } = useBackendTransaction({
-    hash,
-    network,
-    enabled: !!hash && !!network,
-  });
+// export const useTransaction = ({ network, hash }: { network: Network; hash: string }) => {
+//   const {
+//     data: backendTransaction,
+//     isLoading: backendTransactionIsLoading,
+//     isFetched: backendTransactionIsFetched,
+//   } = useBackendTransaction({
+//     hash,
+//     network,
+//     enabled: !!hash && !!network,
+//   });
 
-  return {
-    data: backendTransaction,
-    isLoading: backendTransactionIsLoading,
-    isFetched: backendTransactionIsFetched,
-  };
-};
+//   return {
+//     data: backendTransaction,
+//     isLoading: backendTransactionIsLoading,
+//     isFetched: backendTransactionIsFetched,
+//   };
+// };

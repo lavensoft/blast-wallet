@@ -41,7 +41,7 @@ export async function fetchConsolidatedTransactions<ConsolidatedTransactionsResu
       currency,
       chainIds,
     }),
-    consolidatedTransactionsQueryFunction,
+    // consolidatedTransactionsQueryFunction,
     config
   );
 }
@@ -55,39 +55,39 @@ type _QueryResult = {
   transactions: RainbowTransaction[] | [];
 };
 
-export async function consolidatedTransactionsQueryFunction({
-  queryKey: [{ address, currency, chainIds }],
-  pageParam,
-}: QueryFunctionArgs<typeof consolidatedTransactionsQueryKey>): Promise<_QueryResult> {
-  try {
-    const chainIdsString = chainIds.join(',');
-    const url = `https://addys.p.rainbow.me/v3/${chainIdsString}/${address}/transactions`;
-    const response = await rainbowFetch(url, {
-      method: 'get',
-      params: {
-        currency: currency.toLowerCase(),
-        ...(pageParam ? { pageCursor: pageParam } : {}),
-      },
-      timeout: CONSOLIDATED_TRANSACTIONS_TIMEOUT,
-      headers: {
-        Authorization: `Bearer ${ADDYS_API_KEY}`,
-      },
-    });
+// export async function consolidatedTransactionsQueryFunction({
+//   queryKey: [{ address, currency, chainIds }],
+//   pageParam,
+// }: QueryFunctionArgs<typeof consolidatedTransactionsQueryKey>): Promise<_QueryResult> {
+//   try {
+//     const chainIdsString = chainIds.join(',');
+//     const url = `https://addys.p.rainbow.me/v3/${chainIdsString}/${address}/transactions`;
+//     const response = await rainbowFetch(url, {
+//       method: 'get',
+//       params: {
+//         currency: currency.toLowerCase(),
+//         ...(pageParam ? { pageCursor: pageParam } : {}),
+//       },
+//       timeout: CONSOLIDATED_TRANSACTIONS_TIMEOUT,
+//       headers: {
+//         Authorization: `Bearer ${ADDYS_API_KEY}`,
+//       },
+//     });
 
-    const consolidatedTransactions = await parseConsolidatedTransactions(response?.data, currency);
+//     const consolidatedTransactions = await parseConsolidatedTransactions(response?.data, currency);
 
-    return {
-      cutoff: response?.data?.meta?.cut_off,
-      nextPage: response?.data?.meta?.next_page_cursor,
-      transactions: consolidatedTransactions,
-    };
-  } catch (e) {
-    logger.error(new RainbowError('consolidatedTransactionsQueryFunction: '), {
-      message: e,
-    });
-    return { transactions: [] };
-  }
-}
+//     return {
+//       cutoff: response?.data?.meta?.cut_off,
+//       nextPage: response?.data?.meta?.next_page_cursor,
+//       transactions: consolidatedTransactions,
+//     };
+//   } catch (e) {
+//     logger.error(new RainbowError('consolidatedTransactionsQueryFunction: '), {
+//       message: e,
+//     });
+//     return { transactions: [] };
+//   }
+// }
 
 type ConsolidatedTransactionsResult = {
   cutoff?: number;
@@ -130,7 +130,7 @@ export function useConsolidatedTransactions(
       currency,
       chainIds,
     }),
-    consolidatedTransactionsQueryFunction,
+    // consolidatedTransactionsQueryFunction,
     {
       ...config,
       keepPreviousData: true,

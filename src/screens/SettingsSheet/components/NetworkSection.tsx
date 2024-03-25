@@ -12,7 +12,10 @@ import { settingsUpdateNetwork } from '@/redux/settings';
 import { Network } from '@/helpers';
 import { RainbowNetworks } from '@/networks';
 
-const networks = values(RainbowNetworks).filter(({ networkType }) => networkType !== 'layer2');
+// const networks = values(RainbowNetworks).filter(({ networkType }) => networkType !== 'layer2');
+const networks = values(RainbowNetworks).filter(() => true);
+
+console.log('NetworkSection.tsx', networks);
 
 interface NetworkSectionProps {
   inDevSection?: boolean;
@@ -39,23 +42,26 @@ const NetworkSection = ({ inDevSection }: NetworkSectionProps) => {
   );
 
   const renderNetworkList = useCallback(() => {
-    return networks.map(({ name, value, networkType }) => (
-      <MenuItem
-        disabled={!testnetsEnabled && networkType === 'testnet'}
-        key={value}
-        onPress={() => onNetworkChange(value)}
-        rightComponent={value === network && <MenuItem.StatusIcon status="selected" />}
-        size={52}
-        testID={`${value}-network`}
-        titleComponent={
-          <MenuItem.Title
-            disabled={!testnetsEnabled && networkType === 'testnet'}
-            text={name}
-            weight={inDevSection ? 'medium' : 'semibold'}
-          />
-        }
-      />
-    ));
+    return networks.map(({ name, value, networkType }) => {
+      console.log('NetworkSection.tsx', name, value, networkType);
+      return (
+        <MenuItem
+          disabled={!testnetsEnabled && networkType === 'testnet'}
+          key={value}
+          onPress={() => onNetworkChange(value)}
+          rightComponent={value === network && <MenuItem.StatusIcon status="selected" />}
+          size={52}
+          testID={`${value}-network`}
+          titleComponent={
+            <MenuItem.Title
+              disabled={!testnetsEnabled && networkType === 'testnet'}
+              text={name}
+              weight={inDevSection ? 'medium' : 'semibold'}
+            />
+          }
+        />
+      );
+    });
   }, [inDevSection, network, onNetworkChange, testnetsEnabled]);
 
   return inDevSection ? (

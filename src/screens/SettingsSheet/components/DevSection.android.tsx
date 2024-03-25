@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import lang from 'i18n-js';
 import React, { useCallback, useContext, useState } from 'react';
-import { InteractionManager } from 'react-native';
+import { InteractionManager, Switch } from 'react-native';
 import codePush from 'react-native-code-push';
 import {
   // @ts-ignore
@@ -256,24 +256,14 @@ const DevSection = () => {
             </Inline>
             <MenuContainer testID="developer-settings-sheet">
               <Menu header={IS_DEV || isTestFlight ? 'Normie Settings' : ''}>
-                {/* <MenuItem
-                  disabled
+                <MenuItem
                   leftComponent={<MenuItem.TextIcon icon="🕹️" isEmoji />}
-                  rightComponent={
-                    <Switch
-                      onValueChange={toggleTestnetsEnabled}
-                      value={testnetsEnabled}
-                    />
-                  }
+                  rightComponent={<Switch onValueChange={value => {}} value={testnetsEnabled} />}
                   size={52}
                   testID="testnet-switch"
-                  titleComponent={
-                    <MenuItem.Title
-                      text={lang.t('developer_settings.enable_testnets')}
-                    />
-                  }
+                  titleComponent={<MenuItem.Title text={lang.t('developer_settings.enable_testnets')} />}
                 />
-                {testnetsEnabled && <NetworkSection inDevSection />} */}
+                {testnetsEnabled && <NetworkSection inDevSection />}
                 <MenuItem
                   leftComponent={<MenuItem.TextIcon icon="💥" isEmoji />}
                   onPress={clearLocalStorage}

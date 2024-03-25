@@ -281,7 +281,6 @@ function RecyclerAssetList({
 
   const rowRenderer = React.useCallback(
     (type: any, data: any, index: number): JSX.Element | null => {
-      // Checks if value is *nullish*.
       if (data == null || index == null) {
         return null;
       }

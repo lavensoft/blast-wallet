@@ -245,24 +245,22 @@ const DevSection = () => {
   return (
     <MenuContainer testID="developer-settings-sheet">
       <Menu header={IS_DEV || isTestFlight ? 'Normie Settings' : ''}>
-        {/* <MenuItem
+        <MenuItem
           disabled
           leftComponent={<MenuItem.TextIcon icon="🕹️" isEmoji />}
           rightComponent={
             <Switch
-              onValueChange={toggleTestnetsEnabled}
+              onValueChange={value => {
+                dispatch(settingsChangeTestnetsEnabled(value));
+              }}
               value={testnetsEnabled}
             />
           }
           size={52}
           testID="testnet-switch"
-          titleComponent={
-            <MenuItem.Title
-              text={lang.t('developer_settings.enable_testnets')}
-            />
-          }
+          titleComponent={<MenuItem.Title text={lang.t('developer_settings.enable_testnets')} />}
         />
-        {testnetsEnabled && <NetworkSection inDevSection />} */}
+        {testnetsEnabled && <NetworkSection inDevSection />}
         <MenuItem
           leftComponent={<MenuItem.TextIcon icon="💥" isEmoji />}
           onPress={clearLocalStorage}
