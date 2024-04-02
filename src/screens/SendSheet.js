@@ -348,7 +348,7 @@ export default function SendSheet(props) {
   useEffect(() => {
     const resolveAddressIfNeeded = async () => {
       let realAddress = debouncedRecipient;
-      const isValid = await checkIsValidAddressOrDomainFormat(debouncedRecipient);
+      const isValid = checkIsValidAddressOrDomainFormat(debouncedRecipient);
       if (isValid) {
         realAddress = await resolveNameOrAddress(debouncedRecipient);
         setToAddress(realAddress);
@@ -775,6 +775,12 @@ export default function SendSheet(props) {
   const sendContactListDataKey = useMemo(() => `${ensSuggestions?.[0]?.address || '_'}`, [ensSuggestions]);
 
   const isEmptyWallet = !sortedAssets?.length && !sendableUniqueTokens?.length;
+
+  console.log({
+    showAssetList,
+    isEmptyWallet,
+    sendableUniqueTokens,
+  });
 
   return (
     <Container testID="send-sheet">

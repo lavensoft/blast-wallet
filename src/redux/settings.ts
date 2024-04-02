@@ -153,6 +153,10 @@ export const settingsLoadNetwork = () => async (dispatch: Dispatch<SettingsState
   try {
     const network = await getNetwork();
     const chainId = ethereumUtils.getChainIdFromNetwork(network);
+    console.log({
+      chainId,
+      network,
+    });
     await web3SetHttpProvider(network);
     dispatch({
       payload: { chainId, network },
@@ -240,6 +244,12 @@ export const settingsUpdateAccountAddress =
 export const settingsUpdateNetwork = (network: Network) => async (dispatch: Dispatch<SettingsStateUpdateNetworkSuccessAction>) => {
   const chainId = ethereumUtils.getChainIdFromNetwork(network);
   await web3SetHttpProvider(network);
+
+  console.log({
+    chainId,
+    network,
+  }); //  {"chainId": 11155111, "network": "sepolia"}
+
   try {
     dispatch({
       payload: { chainId, network },
@@ -286,12 +296,12 @@ export const settingsChangeNativeCurrency =
 export const INITIAL_STATE: SettingsState = {
   accountAddress: '',
   appIcon: 'og',
-  chainId: 1,
+  chainId: 81457, // Blast chainId
   flashbotsEnabled: false,
   language: Language.EN_US,
   nativeCurrency: NativeCurrencyKeys.USD,
-  network: Network.mainnet,
-  testnetsEnabled: false,
+  network: Network.blast,
+  testnetsEnabled: true,
 };
 
 export default (state = INITIAL_STATE, action: SettingsStateUpdateAction) => {

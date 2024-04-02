@@ -946,7 +946,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - "RNRudderSdk (from `../node_modules/@rudderstack/rudder-sdk-react-native`)"
   - RNScreens (from `../node_modules/react-native-screens`)
-  - "RNSentry (from `../node_modules/@sentry/react-native`)"
+  - "RNSentry (from `../node_modules/@sentry/react-native/RNSentry.podspec`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSound (from `../node_modules/react-native-sound`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -1220,7 +1220,7 @@ EXTERNAL SOURCES:
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSentry:
-    :path: "../node_modules/@sentry/react-native"
+    :path: "../node_modules/@sentry/react-native/RNSentry.podspec"
   RNShare:
     :path: "../node_modules/react-native-share"
   RNSound:
@@ -1405,6 +1405,6 @@ SPEC CHECKSUMS:
   VisionCamera: 1910a51e4c6f6b049650086d343090f267b4c260
   Yoga: 8796b55dba14d7004f980b54bcc9833ee45b28ce
 
-PODFILE CHECKSUM: 57ebf7adad9bd64764073611ac723eb22d615e4a
+PODFILE CHECKSUM: a844a38071d8f7d54b4f22158a0b18caf31934a0
 
 COCOAPODS: 1.15.2

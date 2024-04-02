@@ -63,41 +63,33 @@ export default function useInitializeWallet() {
         logger.debug('Start wallet setup');
         await resetAccountState();
         logger.debug('resetAccountState ran ok');
-
         const isImporting = !!seedPhrase;
         logger.debug('isImporting? ' + isImporting);
-
         if (shouldRunMigrations && !seedPhrase) {
           logger.debug('shouldRunMigrations && !seedPhrase? => true');
-          await dispatch(walletsLoadState(profilesEnabled));
+          dispatch(walletsLoadState(profilesEnabled));
           logger.debug('walletsLoadState call #1');
           await runMigrations();
           logger.debug('done with migrations');
         }
-
         setIsSmallBalancesOpen(false);
-
         // Load the network first
-        await dispatch(settingsLoadNetwork());
-
+        dispatch(settingsLoadNetwork());
         const { isNew, walletAddress } = await walletInit(seedPhrase, color, name, overwrite, checkedWallet, network, image, silent);
-
+        console.log({ isNew, walletAddress });
         logger.debug('walletInit returned', {
           isNew,
           walletAddress,
         });
-
         if (!switching) {
           // Run keychain integrity checks right after walletInit
           // Except when switching wallets!
           await runKeychainIntegrityChecks();
         }
-
         if (seedPhrase || isNew) {
           logger.debug('walletLoadState call #2');
-          await dispatch(walletsLoadState(profilesEnabled));
+          dispatch(walletsLoadState(profilesEnabled));
         }
-
         if (isNil(walletAddress)) {
           logger.debug('walletAddress is nil');
           Alert.alert(lang.t('wallet.import_failed_invalid_private_key'));
@@ -106,17 +98,14 @@ export default function useInitializeWallet() {
           }
           return null;
         }
-
         if (!(isNew || isImporting)) {
           await loadGlobalEarlyData();
           logger.debug('loaded global data...');
         }
-
-        await dispatch(settingsUpdateAccountAddress(walletAddress));
+        dispatch(settingsUpdateAccountAddress(walletAddress));
         logger.debug('updated settings address', {
           walletAddress,
         });
-
         // Newly created / imported accounts have no data in localstorage
         if (!(isNew || isImporting)) {
           await loadAccountData();
@@ -124,7 +113,6 @@ export default function useInitializeWallet() {
             network,
           });
         }
-
         try {
           hideSplashScreen();
         } catch (err) {
@@ -132,16 +120,12 @@ export default function useInitializeWallet() {
             error: err,
           });
         }
-
         initializeAccountData();
-
         dispatch(appStateUpdate({ walletReady: true }));
         logger.debug('💰 Wallet initialized');
-
         PerformanceTracking.finishMeasuring(PerformanceMetrics.useInitializeWallet, {
           walletStatus: getWalletStatusForPerformanceMetrics(isNew, isImporting),
         });
-
         return walletAddress;
       } catch (error) {
         PerformanceTracking.clearMeasure(PerformanceMetrics.useInitializeWallet);
@@ -152,7 +136,6 @@ export default function useInitializeWallet() {
         if (!switching) {
           await runKeychainIntegrityChecks();
         }
-
         try {
           hideSplashScreen();
         } catch (err) {
@@ -160,7 +143,6 @@ export default function useInitializeWallet() {
             error: err,
           });
         }
-
         captureException(error);
         Alert.alert(lang.t('wallet.something_went_wrong_importing'));
         dispatch(appStateUpdate({ walletReady: true }));

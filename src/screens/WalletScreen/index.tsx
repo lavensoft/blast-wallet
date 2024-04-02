@@ -67,7 +67,7 @@ const WalletScreen: React.FC<any> = ({ navigation, route }) => {
   }, [dispatch, initializeAccountData, loadAccountData, resetAccountState]);
 
   useEffect(() => {
-    const supportedNetworks = [Network.mainnet];
+    const supportedNetworks = [Network.mainnet, Network.sepolia, Network.blast];
     if (!supportedNetworks.includes(currentNetwork)) {
       revertToMainnet();
     }

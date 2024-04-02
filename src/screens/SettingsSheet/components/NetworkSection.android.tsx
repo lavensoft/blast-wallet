@@ -30,7 +30,7 @@ const NetworkSection = ({ inDevSection }: NetworkSectionProps) => {
   const onNetworkChange = useCallback(
     async (network: Network) => {
       await resetAccountState();
-      await dispatch(settingsUpdateNetwork(network));
+      dispatch(settingsUpdateNetwork(network));
       InteractionManager.runAfterInteractions(async () => {
         await loadAccountData();
         initializeAccountData();

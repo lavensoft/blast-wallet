@@ -12,6 +12,7 @@ import { getAvalancheNetworkObject } from './avalanche';
 import { getBlastNetworkObject } from './blast';
 import store from '@/redux/store';
 import * as ls from '@/storage';
+import { getSepoliaNetworkObject } from './sepolia';
 
 /**
  * Array of all Rainbow Networks
@@ -19,16 +20,17 @@ import * as ls from '@/storage';
  */
 export const RainbowNetworks = [
   getMainnetNetworkObject(),
-  // getArbitrumNetworkObject(),
-  // getBaseNetworkObject(),
-  // getOptimismNetworkObject(),
-  // getPolygonNetworkObject(),
-  // getZoraNetworkObject(),
-  // getGnosisNetworkObject(),
-  // getGoerliNetworkObject(),
-  // getBSCNetworkObject(),
-  // getAvalancheNetworkObject(),
+  getArbitrumNetworkObject(),
+  getBaseNetworkObject(),
+  getOptimismNetworkObject(),
+  getPolygonNetworkObject(),
+  getZoraNetworkObject(),
+  getGnosisNetworkObject(),
+  getGoerliNetworkObject(),
+  getBSCNetworkObject(),
+  getAvalancheNetworkObject(),
   getBlastNetworkObject(),
+  getSepoliaNetworkObject(),
 ];
 
 /**
@@ -59,6 +61,8 @@ export function getNetworkObj(network: Network): NetworkProperties {
     // Testnets
     case Network.goerli:
       return getGoerliNetworkObject();
+    case Network.sepolia:
+      return getSepoliaNetworkObject();
 
     // Mainnet
     default:

@@ -112,10 +112,12 @@ export default function WalletList({
   const [rows, setRows] = useState<any[]>([]);
   const [ready, setReady] = useState(false);
   const scrollView = useRef(null);
-  const { network } = useAccountSettings();
+  const { network, nativeCurrencySymbol } = useAccountSettings();
   const opacityAnimation = useSharedValue(0);
   const emptyOpacityAnimation = useSharedValue(1);
   const hardwareWalletsEnabled = useExperimentalFlag(HARDWARE_WALLETS);
+
+  console.log({ allWallets, network, nativeCurrencySymbol });
 
   // Update the rows when allWallets changes
   useEffect(() => {
@@ -128,6 +130,7 @@ export default function WalletList({
     sortedKeys.forEach(key => {
       const wallet = allWallets[key];
       const filteredAccounts = wallet.addresses.filter((account: any) => account.visible);
+      console.log({ wallet, filteredAccounts });
       filteredAccounts.forEach((account: any) => {
         const row = {
           ...account,

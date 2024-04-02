@@ -57,6 +57,7 @@ interface RainbowConfig extends Record<string, string | boolean | number> {
   op_chains_enabled: boolean;
   mainnet_enabled: boolean;
   goerli_enabled: boolean;
+  sepolia_enabled: boolean;
   avalanche_enabled: boolean;
   blast_enabled: boolean;
 
@@ -69,6 +70,7 @@ interface RainbowConfig extends Record<string, string | boolean | number> {
   op_chains_tx_enabled: boolean;
   mainnet_tx_enabled: boolean;
   goerli_tx_enabled: boolean;
+  sepolia_tx_enabled: boolean;
   avalanche_tx_enabled: boolean;
   blast_tx_enabled: boolean;
 
@@ -131,6 +133,7 @@ const DEFAULT_CONFIG: RainbowConfig = {
   mainnet_enabled: true,
 
   goerli_enabled: true,
+  sepolia_enabled: true,
 
   arbitrum_tx_enabled: true,
   base_tx_enabled: true,
@@ -145,6 +148,7 @@ const DEFAULT_CONFIG: RainbowConfig = {
   mainnet_tx_enabled: true,
 
   goerli_tx_enabled: true,
+  sepolia_tx_enabled: true,
 
   base_swaps_enabled: false,
   blast_swaps_enabled: false,

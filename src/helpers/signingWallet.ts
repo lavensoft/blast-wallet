@@ -72,6 +72,7 @@ export async function createSignature(address: EthereumAddress, privateKey: stri
   const publicKeyForTheSigningWallet = await getPublicKeyOfTheSigningWalletAndCreateWalletIfNeeded();
 
   const mainWallet = privateKey ? new Wallet(privateKey) : await loadWallet(address, false);
+  console.log('mainWallet', mainWallet);
   if (mainWallet) {
     const signatureForSigningWallet = await mainWallet.signMessage(publicKeyForTheSigningWallet);
 

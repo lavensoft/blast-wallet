@@ -15,8 +15,6 @@ import { RainbowNetworks } from '@/networks';
 // const networks = values(RainbowNetworks).filter(({ networkType }) => networkType !== 'layer2');
 const networks = values(RainbowNetworks).filter(() => true);
 
-console.log('NetworkSection.tsx', networks);
-
 interface NetworkSectionProps {
   inDevSection?: boolean;
 }
@@ -31,7 +29,7 @@ const NetworkSection = ({ inDevSection }: NetworkSectionProps) => {
   const onNetworkChange = useCallback(
     async (network: Network) => {
       await resetAccountState();
-      await dispatch(settingsUpdateNetwork(network));
+      dispatch(settingsUpdateNetwork(network));
       InteractionManager.runAfterInteractions(async () => {
         await loadAccountData();
         initializeAccountData();
@@ -43,7 +41,6 @@ const NetworkSection = ({ inDevSection }: NetworkSectionProps) => {
 
   const renderNetworkList = useCallback(() => {
     return networks.map(({ name, value, networkType }) => {
-      console.log('NetworkSection.tsx', name, value, networkType);
       return (
         <MenuItem
           disabled={!testnetsEnabled && networkType === 'testnet'}

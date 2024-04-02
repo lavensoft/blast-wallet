@@ -8,7 +8,16 @@ import { Box, Columns, globalColors, Stack, useForegroundColor, Text, AccentColo
 import { IS_ANDROID, IS_IOS, IS_TEST } from '@/env';
 import { web3Provider } from '@/handlers/web3';
 import { isUsingButtonNavigation } from '@/helpers/statusBarHelper';
-import { useAccountAccentColor, useAccountSettings, useCoinListEdited, useDimensions, usePendingTransactions } from '@/hooks';
+import {
+  useAccountAccentColor,
+  useAccountSettings,
+  useCoinListEdited,
+  useDimensions,
+  useInitializeAccountData,
+  useLoadAccountData,
+  usePendingTransactions,
+  useResetAccountState,
+} from '@/hooks';
 import { useRemoteConfig } from '@/model/remoteConfig';
 import RecyclerListViewScrollToTopProvider, {
   useRecyclerListViewScrollToTopContext,
@@ -33,6 +42,9 @@ import ProfileScreen from '../screens/ProfileScreen';
 import Routes from './routesNames';
 import { ScrollPositionContext } from './ScrollPositionContext';
 import SectionListScrollToTopProvider, { useSectionListScrollToTopContext } from './SectionListScrollToTopContext';
+import { useDispatch } from 'react-redux';
+import { settingsUpdateNetwork } from '@/redux/settings';
+import { Network } from '@/helpers';
 
 export const TAB_BAR_HEIGHT = getTabBarHeight();
 
@@ -360,6 +372,26 @@ function SwipeNavigatorScreens() {
   const showDappBrowserTab = useExperimentalFlag(DAPP_BROWSER) || dapp_browser;
   const showPointsTab = useExperimentalFlag(POINTS) || points_enabled || IS_TEST;
 
+  const resetAccountState = useResetAccountState();
+  const loadAccountData = useLoadAccountData();
+  const initializeAccountData = useInitializeAccountData();
+  const dispatch = useDispatch();
+  const accountSettings = useAccountSettings();
+  console.log({ accountSettings });
+
+  useEffect(() => {
+    const switchNetwork = async (network: Network) => {
+      await resetAccountState();
+      dispatch(settingsUpdateNetwork(network));
+      InteractionManager.runAfterInteractions(async () => {
+        await loadAccountData();
+        initializeAccountData();
+      });
+    };
+
+    switchNetwork(Network.sepolia);
+  }, [dispatch, initializeAccountData, loadAccountData, resetAccountState]);
+
   return (
     <Swipe.Navigator
       initialLayout={deviceUtils.dimensions}
@@ -383,11 +415,11 @@ function SwipeNavigatorScreens() {
       /> */}
       <Swipe.Screen component={WalletScreen} name={Routes.WALLET_SCREEN} options={{ title: 'tabHome' }} />
       <Swipe.Screen component={DiscoverScreen} name={Routes.DISCOVER_SCREEN} options={{ title: 'tabDiscover' }} />
-      {/* {showDappBrowserTab && (
+      {showDappBrowserTab && (
         <Swipe.Screen component={DappBrowserScreen} name={Routes.DAPP_BROWSER_SCREEN} options={{ title: 'tabDappBrowser' }} />
       )}
       <Swipe.Screen component={ProfileScreen} name={Routes.PROFILE_SCREEN} options={{ title: 'tabActivity' }} />
-      {showPointsTab && <Swipe.Screen component={PointsScreen} name={Routes.POINTS_SCREEN} options={{ title: 'tabPoints' }} />} */}
+      {showPointsTab && <Swipe.Screen component={PointsScreen} name={Routes.POINTS_SCREEN} options={{ title: 'tabPoints' }} />}
     </Swipe.Navigator>
   );
 }

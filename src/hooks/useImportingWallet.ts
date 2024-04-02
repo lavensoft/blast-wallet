@@ -128,6 +128,7 @@ export default function useImportingWallet({ showImportModal = true } = {}) {
       let name: string | null = null;
       // Validate ENS
       if (isENSAddressFormat(input)) {
+        console.log({ ENS: input });
         try {
           const web3Provider = await getProviderForNetwork();
           const [address, avatar] = await Promise.all([
@@ -156,6 +157,7 @@ export default function useImportingWallet({ showImportModal = true } = {}) {
         }
         // Look up ENS for 0x address
       } else if (isUnstoppableAddressFormat(input)) {
+        console.log({ NotENS: input });
         try {
           const address = await resolveUnstoppableDomain(input);
           if (!address) {

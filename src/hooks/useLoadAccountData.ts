@@ -11,8 +11,8 @@ export default function useLoadAccountData() {
   const dispatch = useDispatch();
   const loadAccountData = useCallback(async () => {
     logger.sentry('Load wallet account data');
-    await dispatch(showcaseTokensLoadState());
-    await dispatch(hiddenTokensLoadState());
+    dispatch(showcaseTokensLoadState());
+    dispatch(hiddenTokensLoadState());
     const promises = [];
 
     // WC requests + connections

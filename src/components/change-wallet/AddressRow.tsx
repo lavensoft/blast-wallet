@@ -119,6 +119,8 @@ interface AddressRowProps {
 export default function AddressRow({ contextMenuActions, data, editMode, onPress }: AddressRowProps) {
   const notificationsEnabled = useExperimentalFlag(NOTIFICATIONS);
 
+  console.log({ data });
+
   const { address, balance, color: accountColor, ens, image: accountImage, isSelected, isReadOnly, isLedger, label, walletId } = data;
 
   const { colors, isDarkMode } = useTheme();

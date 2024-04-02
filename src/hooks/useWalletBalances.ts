@@ -18,6 +18,8 @@ const ETH_ADDRESS = '0x0000000000000000000000000000000000000000';
 const useWalletBalances = (wallets: AllRainbowWallets) => {
   const network = useSelector((state: AppState) => state.settings.network);
 
+  console.log({ network });
+
   const fetchBalances = useCallback(async () => {
     const walletBalances: { [address: string]: string } = {};
 
